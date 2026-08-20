@@ -17,7 +17,7 @@ services:
     environment:
       - TZ=${TZ}
       - HTTPS=OFF
-      - HTTP_PORT=8080
+      - HTTP_PORT=${HTTP_PORT:-8080}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - poste-data:/data
