@@ -1,19 +1,20 @@
-# dokploy: allow-host-ports — mail protocols (SMTP 25/465/587, POP3 110/995, IMAP 143/993, Sieve 4190) are not HTTP; mail servers and clients must reach them directly on the host.
+# dokploy: allow-host-ports — mail protocols are not HTTP; mail servers and clients must reach them directly on the host.
 version: "3.8"
 services:
   mailserver:
-    image: analogic/poste.io
+    image: analogic/poste.io:latest
     restart: unless-stopped
     hostname: mail.${DOMAIN}
     ports:
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "465:465"
-      - "587:587"
-      - "993:993"
-      - "995:995"
-      - "4190:4190"
+      - "25:25"      # SMTP
+      - "110:110"    # POP3
+      - "143:143"    # IMAP
+      - "465:465"    # SMTPS
+      - "587:587"    # Submission
+      - "993:993"    # IMAPS
+      - "995:995"    # POP3S
+      - "4190:4190"  # Sieve
+      - "${HTTP_PORT:-8080}:${HTTP_PORT:-8080}" # Web UI & Webmail (Admin Access)
     environment:
       - TZ=${TZ}
       - HTTPS=OFF
